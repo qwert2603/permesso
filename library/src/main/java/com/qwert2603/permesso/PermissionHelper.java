@@ -3,6 +3,7 @@ package com.qwert2603.permesso;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -29,12 +30,13 @@ final class PermissionHelper {
     @SuppressLint("UseSparseArrays")
     private final Map<Integer, SingleEmitter<String>> emitters = new HashMap<>();
 
-    PermissionHelper(Context appContext, ActivityProvider activityProvider) {
+    PermissionHelper(@NonNull Context appContext, @NonNull ActivityProvider activityProvider) {
         this.appContext = appContext;
         this.activityProvider = activityProvider;
     }
 
-    Single<String> requestPermission(final String permission) {
+    @NonNull
+    Single<String> requestPermission(@NonNull final String permission) {
         if (ContextCompat.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED) {
             return activityProvider.resumedActivity()
                     .flatMap(new Function<AppCompatActivity, SingleSource<? extends String>>() {
@@ -55,7 +57,7 @@ final class PermissionHelper {
         }
     }
 
-    void onPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
+    void onPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         SingleEmitter<String> emitter = emitters.remove(requestCode);
         if (emitter == null || emitter.isDisposed()) return;
         if (permissions.length == 0 || grantResults.length == 0) {

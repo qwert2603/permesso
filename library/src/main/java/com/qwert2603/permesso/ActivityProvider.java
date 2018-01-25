@@ -1,5 +1,6 @@
 package com.qwert2603.permesso;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
 import io.reactivex.Single;
@@ -12,6 +13,7 @@ final class ActivityProvider {
 
     private final BehaviorSubject<Wrapper<AppCompatActivity>> activityChanges = BehaviorSubject.createDefault(new Wrapper<AppCompatActivity>(null));
 
+    @NonNull
     Single<AppCompatActivity> resumedActivity() {
         return activityChanges
                 .filter(new Predicate<Wrapper<AppCompatActivity>>() {

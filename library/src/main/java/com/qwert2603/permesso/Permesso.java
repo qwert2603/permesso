@@ -17,6 +17,7 @@ public final class Permesso {
         this.activityProvider = activityProvider;
     }
 
+    @NonNull
     public static Permesso create(@NonNull Context appContext) {
         ActivityProvider activityProvider = new ActivityProvider();
         return new Permesso(
@@ -25,6 +26,7 @@ public final class Permesso {
         );
     }
 
+    @NonNull
     public Single<String> requestPermission(@NonNull final String permission) {
         return permissionHelper.requestPermission(permission);
     }
