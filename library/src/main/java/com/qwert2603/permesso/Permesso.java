@@ -36,7 +36,7 @@ public final class Permesso {
     }
 
     @NonNull
-    public LifecycleObserver getLifecycleObserver() {
+    public LifecycleObserver createLifecycleObserver() {
         return new ActivityProviderLifecycle(activityProvider);
     }
 }
