@@ -16,7 +16,7 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 
-public final class PermissionHelper {
+final class PermissionHelper {
 
     private final int MIN_REQUEST_CODE = 1000;
     private final int MAX_REQUEST_CODE = 1999;
@@ -27,14 +27,14 @@ public final class PermissionHelper {
     private int lastRequestCode = MIN_REQUEST_CODE;
 
     @SuppressLint("UseSparseArrays")
-    private Map<Integer, SingleEmitter<String>> emitters = new HashMap<>();
+    private final Map<Integer, SingleEmitter<String>> emitters = new HashMap<>();
 
-    public PermissionHelper(Context appContext, ActivityProvider activityProvider) {
+    PermissionHelper(Context appContext, ActivityProvider activityProvider) {
         this.appContext = appContext;
         this.activityProvider = activityProvider;
     }
 
-    public Single<String> requestPermission(final String permission) {
+    Single<String> requestPermission(final String permission) {
         if (ContextCompat.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED) {
             return activityProvider.resumedActivity()
                     .flatMap(new Function<AppCompatActivity, SingleSource<? extends String>>() {
@@ -55,7 +55,7 @@ public final class PermissionHelper {
         }
     }
 
-    public void onPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
+    void onPermissionResult(int requestCode, String[] permissions, int[] grantResults) {
         SingleEmitter<String> emitter = emitters.remove(requestCode);
         if (emitter == null || emitter.isDisposed()) return;
         if (permissions.length == 0 || grantResults.length == 0) {

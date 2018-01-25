@@ -6,11 +6,11 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
 import android.support.v7.app.AppCompatActivity;
 
-public final class ActivityProviderLifecycle implements LifecycleObserver {
+final class ActivityProviderLifecycle implements LifecycleObserver {
 
     private final ActivityProvider activityProvider;
 
-    public ActivityProviderLifecycle(ActivityProvider activityProvider) {
+    ActivityProviderLifecycle(ActivityProvider activityProvider) {
         this.activityProvider = activityProvider;
     }
 

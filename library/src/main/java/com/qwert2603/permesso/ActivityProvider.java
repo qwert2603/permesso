@@ -8,11 +8,11 @@ import io.reactivex.functions.Predicate;
 import io.reactivex.subjects.BehaviorSubject;
 
 @SuppressWarnings("WeakerAccess")
-public final class ActivityProvider {
+final class ActivityProvider {
 
-    private BehaviorSubject<Wrapper<AppCompatActivity>> activityChanges = BehaviorSubject.createDefault(new Wrapper<AppCompatActivity>(null));
+    private final BehaviorSubject<Wrapper<AppCompatActivity>> activityChanges = BehaviorSubject.createDefault(new Wrapper<AppCompatActivity>(null));
 
-    public Single<AppCompatActivity> resumedActivity() {
+    Single<AppCompatActivity> resumedActivity() {
         return activityChanges
                 .filter(new Predicate<Wrapper<AppCompatActivity>>() {
                     @Override
@@ -29,11 +29,11 @@ public final class ActivityProvider {
                 .firstOrError();
     }
 
-    public void onActivityResumed(AppCompatActivity appCompatActivity) {
+    void onActivityResumed(AppCompatActivity appCompatActivity) {
         activityChanges.onNext(new Wrapper<>(appCompatActivity));
     }
 
-    public void onActivityPaused(AppCompatActivity appCompatActivity) {
+    void onActivityPaused(@SuppressWarnings("unused") AppCompatActivity appCompatActivity) {
         activityChanges.onNext(new Wrapper<AppCompatActivity>(null));
     }
 }
