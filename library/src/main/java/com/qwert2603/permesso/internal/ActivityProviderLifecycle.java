@@ -1,4 +1,4 @@
-package com.qwert2603.permesso;
+package com.qwert2603.permesso.internal;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
@@ -7,12 +7,12 @@ import android.arch.lifecycle.OnLifecycleEvent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 
-final class ActivityProviderLifecycle implements LifecycleObserver {
+public final class ActivityProviderLifecycle implements LifecycleObserver {
 
     @NonNull
     private final ActivityProvider activityProvider;
 
-    ActivityProviderLifecycle(@NonNull ActivityProvider activityProvider) {
+    public ActivityProviderLifecycle(@NonNull ActivityProvider activityProvider) {
         this.activityProvider = activityProvider;
     }
 

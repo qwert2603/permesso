@@ -1,4 +1,4 @@
-package com.qwert2603.permesso;
+package com.qwert2603.permesso.internal;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+
+import com.qwert2603.permesso.exception.PermissionCancelledException;
+import com.qwert2603.permesso.exception.PermissionDeniedException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +20,7 @@ import io.reactivex.SingleOnSubscribe;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
 
-final class PermissionHelper {
+public final class PermissionHelper {
 
     private final int MIN_REQUEST_CODE = 1000;
     private final int MAX_REQUEST_CODE = 1999;
@@ -30,21 +33,21 @@ final class PermissionHelper {
     @SuppressLint("UseSparseArrays")
     private final Map<Integer, SingleEmitter<String>> emitters = new HashMap<>();
 
-    PermissionHelper(@NonNull Context appContext, @NonNull ActivityProvider activityProvider) {
+    public PermissionHelper(@NonNull Context appContext, @NonNull ActivityProvider activityProvider) {
         this.appContext = appContext;
         this.activityProvider = activityProvider;
     }
 
     @NonNull
-    Single<String> requestPermission(@NonNull final String permission) {
+    public Single<String> requestPermission(@NonNull final String permission) {
         if (ContextCompat.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED) {
             return activityProvider.resumedActivity()
                     .flatMap(new Function<AppCompatActivity, SingleSource<? extends String>>() {
                         @Override
-                        public SingleSource<? extends String> apply(final AppCompatActivity appCompatActivity) throws Exception {
+                        public SingleSource<? extends String> apply(final AppCompatActivity appCompatActivity) {
                             return Single.create(new SingleOnSubscribe<String>() {
                                 @Override
-                                public void subscribe(SingleEmitter<String> emitter) throws Exception {
+                                public void subscribe(SingleEmitter<String> emitter) {
                                     emitters.put(lastRequestCode, emitter);
                                     ActivityCompat.requestPermissions(appCompatActivity, new String[]{permission}, lastRequestCode);
                                     lastRequestCode = getNextRequestCode(lastRequestCode);
@@ -57,7 +60,7 @@ final class PermissionHelper {
         }
     }
 
-    void onPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    public void onPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         SingleEmitter<String> emitter = emitters.remove(requestCode);
         if (emitter == null || emitter.isDisposed()) return;
         if (permissions.length == 0 || grantResults.length == 0) {

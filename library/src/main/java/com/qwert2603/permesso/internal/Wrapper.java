@@ -1,4 +1,4 @@
-package com.qwert2603.permesso;
+package com.qwert2603.permesso.internal;
 
 import android.support.annotation.Nullable;
 
