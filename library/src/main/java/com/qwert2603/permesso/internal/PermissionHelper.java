@@ -1,12 +1,12 @@
 package com.qwert2603.permesso.internal;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.qwert2603.permesso.exception.PermissionCancelledException;
 import com.qwert2603.permesso.exception.PermissionDeniedException;
@@ -42,14 +42,14 @@ public final class PermissionHelper {
     public Single<String> requestPermission(@NonNull final String permission) {
         if (ContextCompat.checkSelfPermission(appContext, permission) != PackageManager.PERMISSION_GRANTED) {
             return activityProvider.resumedActivity()
-                    .flatMap(new Function<AppCompatActivity, SingleSource<? extends String>>() {
+                    .flatMap(new Function<Activity, SingleSource<? extends String>>() {
                         @Override
-                        public SingleSource<? extends String> apply(final AppCompatActivity appCompatActivity) {
+                        public SingleSource<? extends String> apply(final Activity activity) {
                             return Single.create(new SingleOnSubscribe<String>() {
                                 @Override
                                 public void subscribe(SingleEmitter<String> emitter) {
                                     emitters.put(lastRequestCode, emitter);
-                                    ActivityCompat.requestPermissions(appCompatActivity, new String[]{permission}, lastRequestCode);
+                                    ActivityCompat.requestPermissions(activity, new String[]{permission}, lastRequestCode);
                                     lastRequestCode = getNextRequestCode(lastRequestCode);
                                 }
                             });

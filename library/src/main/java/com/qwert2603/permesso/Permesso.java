@@ -1,11 +1,10 @@
 package com.qwert2603.permesso;
 
-import androidx.lifecycle.LifecycleObserver;
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import com.qwert2603.permesso.internal.ActivityProvider;
-import com.qwert2603.permesso.internal.ActivityProviderLifecycle;
 import com.qwert2603.permesso.internal.PermissionHelper;
 
 import io.reactivex.Single;
@@ -25,12 +24,6 @@ public final class Permesso {
             }
         };
         activityCallbacks = new ActivityCallbacks() {
-            @NonNull
-            @Override
-            public LifecycleObserver createActivityLifecycleObserver() {
-                return new ActivityProviderLifecycle(activityProvider);
-            }
-
             @Override
             public void onPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
                 permissionHelper.onPermissionResult(requestCode, permissions, grantResults);
@@ -40,7 +33,7 @@ public final class Permesso {
 
     @NonNull
     public static Permesso create(@NonNull Context appContext) {
-        ActivityProvider activityProvider = new ActivityProvider();
+        ActivityProvider activityProvider = ActivityProvider.INSTANCE;
         return new Permesso(
                 new PermissionHelper(appContext.getApplicationContext(), activityProvider),
                 activityProvider

@@ -29,7 +29,6 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             permesso = Permesso.create(this.applicationContext)
         }
-        lifecycle.addObserver(permesso.activityCallbacks.createActivityLifecycleObserver())
 
         askPermission_Button.setOnClickListener { SomeRepo.doSmth() }
     }

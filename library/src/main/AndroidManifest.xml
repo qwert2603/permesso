@@ -1,1 +1,10 @@
-<manifest package="com.qwert2603.permesso" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.qwert2603.permesso">
+
+    <application>
+        <provider
+            android:name=".internal.PermessoContentProvider"
+            android:authorities="com.qwert2603.permesso"
+            android:exported="false" />
+    </application>
+</manifest>
