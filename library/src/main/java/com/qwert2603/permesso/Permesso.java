@@ -1,8 +1,8 @@
 package com.qwert2603.permesso;
 
-import android.arch.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleObserver;
 import android.content.Context;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 import com.qwert2603.permesso.internal.ActivityProvider;
 import com.qwert2603.permesso.internal.ActivityProviderLifecycle;

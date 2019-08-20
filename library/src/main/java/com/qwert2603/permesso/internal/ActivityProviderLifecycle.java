@@ -1,11 +1,11 @@
 package com.qwert2603.permesso.internal;
 
-import android.arch.lifecycle.Lifecycle;
-import android.arch.lifecycle.LifecycleObserver;
-import android.arch.lifecycle.LifecycleOwner;
-import android.arch.lifecycle.OnLifecycleEvent;
-import android.support.annotation.NonNull;
-import android.support.v7.app.AppCompatActivity;
+import androidx.lifecycle.Lifecycle;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.OnLifecycleEvent;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public final class ActivityProviderLifecycle implements LifecycleObserver {
 
@@ -17,11 +17,13 @@ public final class ActivityProviderLifecycle implements LifecycleObserver {
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+    @SuppressWarnings("unused")
     void onResume(LifecycleOwner lifecycleOwner) {
         activityProvider.onActivityResumed((AppCompatActivity) lifecycleOwner);
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
+    @SuppressWarnings("unused")
     void onPause(LifecycleOwner lifecycleOwner) {
         activityProvider.onActivityPaused((AppCompatActivity) lifecycleOwner);
     }

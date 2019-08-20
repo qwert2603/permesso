@@ -1,7 +1,7 @@
 package com.qwert2603.permesso;
 
-import android.arch.lifecycle.LifecycleObserver;
-import android.support.annotation.NonNull;
+import androidx.lifecycle.LifecycleObserver;
+import androidx.annotation.NonNull;
 
 @SuppressWarnings("unused")
 public interface ActivityCallbacks {

@@ -1,6 +1,6 @@
 package com.qwert2603.permesso.exception;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 @SuppressWarnings("WeakerAccess")
 public final class PermissionDeniedException extends PermessoException {
