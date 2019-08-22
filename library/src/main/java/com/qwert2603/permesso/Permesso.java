@@ -14,7 +14,7 @@ public final class Permesso {
         return new Permesso();
     }
 
-    @NonNull Single<String> requestPermission(@NonNull final String permission) {
+    @NonNull public Single<String> requestPermission(@NonNull final String permission) {
         return PermissionHelper.INSTANCE.requestPermission(permission);
     }
 }
