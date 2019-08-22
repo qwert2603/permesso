@@ -9,25 +9,12 @@ import io.reactivex.Single;
 @SuppressWarnings("unused")
 public final class Permesso {
 
-    private final PermissionRequester permissionRequester;
-
-    private Permesso(final PermissionHelper permissionHelper) {
-        permissionRequester = new PermissionRequester() {
-            @NonNull
-            @Override
-            public Single<String> requestPermission(@NonNull String permission) {
-                return permissionHelper.requestPermission(permission);
-            }
-        };
-    }
-
     @NonNull
     public static Permesso create() {
-        return new Permesso(PermissionHelper.INSTANCE);
+        return new Permesso();
     }
 
-    @NonNull
-    public PermissionRequester getPermissionRequester() {
-        return permissionRequester;
+    @NonNull Single<String> requestPermission(@NonNull final String permission) {
+        return PermissionHelper.INSTANCE.requestPermission(permission);
     }
 }
