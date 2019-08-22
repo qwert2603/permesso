@@ -6,8 +6,10 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 public final class PermessoContentProvider extends ContentProvider {
     @Override
@@ -15,13 +17,25 @@ public final class PermessoContentProvider extends ContentProvider {
         final Application application = (Application) getContext().getApplicationContext();
         application.registerActivityLifecycleCallbacks(new ActivityLifecycleCallbacksAdapter() {
             @Override
-            public void onActivityResumed(Activity activity) {
-                ActivityProvider.INSTANCE.onActivityResumed(activity);
+            public void onActivityResumed(@NonNull final Activity activity) {
+                if (activity instanceof AppCompatActivity) {
+                    ActivityProvider.INSTANCE.onActivityResumed((AppCompatActivity) activity);
+                } else {
+                    logNotAppCompatActivity(activity);
+                }
             }
 
             @Override
-            public void onActivityPaused(Activity activity) {
-                ActivityProvider.INSTANCE.onActivityPaused(activity);
+            public void onActivityPaused(@NonNull final Activity activity) {
+                if (activity instanceof AppCompatActivity) {
+                    ActivityProvider.INSTANCE.onActivityPaused((AppCompatActivity) activity);
+                } else {
+                    logNotAppCompatActivity(activity);
+                }
+            }
+
+            private void logNotAppCompatActivity(Activity activity) {
+                Log.e("Permesso", "Activity must extend AppCompatActivity: " + activity);
             }
         });
         return true;

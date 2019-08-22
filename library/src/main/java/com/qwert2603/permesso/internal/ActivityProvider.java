@@ -1,46 +1,55 @@
 package com.qwert2603.permesso.internal;
 
-import android.app.Activity;
-
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
 import io.reactivex.functions.Predicate;
 import io.reactivex.subjects.BehaviorSubject;
 
-public final class ActivityProvider {
+final class ActivityProvider {
 
-    public static final ActivityProvider INSTANCE = new ActivityProvider();
+    private static final class Wrapper<T> {
+        @Nullable
+        final T value;
 
-    private final BehaviorSubject<Wrapper<Activity>> activityChanges = BehaviorSubject.createDefault(new Wrapper<Activity>(null));
+        Wrapper(@Nullable T value) {
+            this.value = value;
+        }
+    }
+
+    static final ActivityProvider INSTANCE = new ActivityProvider();
+
+    private final BehaviorSubject<Wrapper<AppCompatActivity>> activityChanges = BehaviorSubject.createDefault(new Wrapper<AppCompatActivity>(null));
 
     private ActivityProvider() {
     }
 
     @NonNull
-    Single<Activity> resumedActivity() {
+    Single<AppCompatActivity> resumedActivity() {
         return activityChanges
-                .filter(new Predicate<Wrapper<Activity>>() {
+                .filter(new Predicate<Wrapper<AppCompatActivity>>() {
                     @Override
-                    public boolean test(Wrapper<Activity> activityWrapper) {
+                    public boolean test(Wrapper<AppCompatActivity> activityWrapper) {
                         return activityWrapper.value != null;
                     }
                 })
-                .map(new Function<Wrapper<Activity>, Activity>() {
+                .map(new Function<Wrapper<AppCompatActivity>, AppCompatActivity>() {
                     @Override
-                    public Activity apply(Wrapper<Activity> activityWrapper) {
+                    public AppCompatActivity apply(Wrapper<AppCompatActivity> activityWrapper) {
                         return activityWrapper.value;
                     }
                 })
                 .firstOrError();
     }
 
-    void onActivityResumed(Activity activity) {
+    void onActivityResumed(AppCompatActivity activity) {
         activityChanges.onNext(new Wrapper<>(activity));
     }
 
-    void onActivityPaused(@SuppressWarnings("unused") Activity activity) {
-        activityChanges.onNext(new Wrapper<Activity>(null));
+    void onActivityPaused(@SuppressWarnings("unused") AppCompatActivity activity) {
+        activityChanges.onNext(new Wrapper<AppCompatActivity>(null));
     }
 }

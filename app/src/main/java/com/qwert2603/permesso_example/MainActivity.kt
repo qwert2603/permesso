@@ -27,15 +27,9 @@ class MainActivity : AppCompatActivity() {
         logD("MainActivity onCreate ${hashCode()}")
 
         if (savedInstanceState == null) {
-            permesso = Permesso.create(this.applicationContext)
+            permesso = Permesso.create()
         }
 
         askPermission_Button.setOnClickListener { SomeRepo.doSmth() }
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        logD("MainActivity onRequestPermissionsResult ${hashCode()}")
-        permesso.activityCallbacks.onPermissionResult(requestCode, permissions, grantResults)
     }
 }

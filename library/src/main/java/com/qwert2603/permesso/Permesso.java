@@ -1,10 +1,7 @@
 package com.qwert2603.permesso;
 
-import android.content.Context;
-
 import androidx.annotation.NonNull;
 
-import com.qwert2603.permesso.internal.ActivityProvider;
 import com.qwert2603.permesso.internal.PermissionHelper;
 
 import io.reactivex.Single;
@@ -13,9 +10,8 @@ import io.reactivex.Single;
 public final class Permesso {
 
     private final PermissionRequester permissionRequester;
-    private final ActivityCallbacks activityCallbacks;
 
-    private Permesso(final PermissionHelper permissionHelper, final ActivityProvider activityProvider) {
+    private Permesso(final PermissionHelper permissionHelper) {
         permissionRequester = new PermissionRequester() {
             @NonNull
             @Override
@@ -23,30 +19,15 @@ public final class Permesso {
                 return permissionHelper.requestPermission(permission);
             }
         };
-        activityCallbacks = new ActivityCallbacks() {
-            @Override
-            public void onPermissionResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-                permissionHelper.onPermissionResult(requestCode, permissions, grantResults);
-            }
-        };
     }
 
     @NonNull
-    public static Permesso create(@NonNull Context appContext) {
-        ActivityProvider activityProvider = ActivityProvider.INSTANCE;
-        return new Permesso(
-                new PermissionHelper(appContext.getApplicationContext(), activityProvider),
-                activityProvider
-        );
+    public static Permesso create() {
+        return new Permesso(PermissionHelper.INSTANCE);
     }
 
     @NonNull
     public PermissionRequester getPermissionRequester() {
         return permissionRequester;
-    }
-
-    @NonNull
-    public ActivityCallbacks getActivityCallbacks() {
-        return activityCallbacks;
     }
 }
