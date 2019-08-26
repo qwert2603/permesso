@@ -1,0 +1,10 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.qwert2603.permesso_crtn">
+
+    <application>
+        <provider
+            android:name=".PermessoContentProvider"
+            android:authorities="${applicationId}.com.qwert2603.permesso_crtn"
+            android:exported="false" />
+    </application>
+</manifest>
