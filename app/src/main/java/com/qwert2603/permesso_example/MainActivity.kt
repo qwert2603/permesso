@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.qwert2603.permesso.Permesso
+import com.qwert2603.permesso_coroutines.PermessoCoroutines
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -36,10 +37,9 @@ class MainActivity : AppCompatActivity() {
         askPermission_Button.setOnClickListener { SomeRepo.doSmth() }
 
         crtn_Button.setOnClickListener {
-            val permessoCrtn = com.qwert2603.permesso_crtn.Permesso
             GlobalScope.launch(Dispatchers.Main) {
                 try {
-                    val result = permessoCrtn.requestPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    val result = PermessoCoroutines.requestPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
                     logD("permessoCrtn $result")
                 } catch (t: Throwable) {
                     logE("permessoCrtn $t", t)

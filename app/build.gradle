@@ -28,7 +28,9 @@ android {
 
 dependencies {
     implementation project(":library")
-    implementation project(":permesso_crtn")
+
+    implementation project(":permesso_coroutines")
+//    implementation 'com.github.qwert2603.permesso:permesso_coroutines:2.2.1'
 
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"

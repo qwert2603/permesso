@@ -1,4 +1,4 @@
-package com.qwert2603.permesso_crtn
+package com.qwert2603.permesso_coroutines
 
 open class PermessoException : Exception()
 

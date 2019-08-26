@@ -1,11 +1,10 @@
-package com.qwert2603.permesso_crtn
+package com.qwert2603.permesso_coroutines
 
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.*
 import kotlinx.coroutines.flow.*
 import org.junit.Test
 
-import org.junit.Assert.*
 import java.util.concurrent.Executors
 
 @FlowPreview

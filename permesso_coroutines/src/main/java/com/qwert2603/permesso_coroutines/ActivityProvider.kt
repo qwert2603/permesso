@@ -1,4 +1,4 @@
-package com.qwert2603.permesso_crtn
+package com.qwert2603.permesso_coroutines
 
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.coroutines.channels.ConflatedBroadcastChannel

@@ -5,7 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/permesso.iml" filepath="$PROJECT_DIR$/permesso.iml" />
-      <module fileurl="file://$PROJECT_DIR$/permesso_crtn/permesso_crtn.iml" filepath="$PROJECT_DIR$/permesso_crtn/permesso_crtn.iml" />
+      <module fileurl="file://$PROJECT_DIR$/permesso_coroutines/permesso_coroutines.iml" filepath="$PROJECT_DIR$/permesso_coroutines/permesso_coroutines.iml" />
     </modules>
   </component>
 </project>

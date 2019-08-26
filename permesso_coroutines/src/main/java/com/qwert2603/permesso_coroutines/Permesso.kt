@@ -1,8 +1,7 @@
-package com.qwert2603.permesso_crtn
+package com.qwert2603.permesso_coroutines
 
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.channels.sendBlocking
@@ -18,7 +17,7 @@ import kotlinx.coroutines.flow.mapNotNull
 //    Log.e("AASSDD", s, t)
 //}
 
-object Permesso {
+object PermessoCoroutines {
 
     private const val MIN_REQUEST_CODE = 1000
     private const val MAX_REQUEST_CODE = 1999
@@ -70,13 +69,4 @@ object Permesso {
                 MAX_REQUEST_CODE -> MIN_REQUEST_CODE
                 else -> currentRequestCode + 1
             }
-}
-
-internal class PermessoFragment : Fragment() {
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
-        Permesso.onPermissionResult(requestCode, permissions, grantResults)
-        requireFragmentManager().beginTransaction()
-                .remove(this)
-                .commitNow()
-    }
 }

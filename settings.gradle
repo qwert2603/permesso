@@ -1,1 +1,1 @@
-include ':library', ':app', ':permesso_crtn'
+include ':library', ':app', ':permesso_coroutines'
