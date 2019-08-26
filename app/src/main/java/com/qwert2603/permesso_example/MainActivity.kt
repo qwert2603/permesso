@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.qwert2603.permesso.Permesso
 import com.qwert2603.permesso_coroutines.PermessoCoroutines
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         askPermission_Button.setOnClickListener { SomeRepo.doSmth() }
 
         crtn_Button.setOnClickListener {
-            GlobalScope.launch(Dispatchers.Main) {
+            CoroutineScope(Dispatchers.Main).launch {
                 try {
                     val result = PermessoCoroutines.requestPermission(android.Manifest.permission.ACCESS_FINE_LOCATION)
                     logD("permessoCrtn $result")
