@@ -1,9 +1,7 @@
 package com.qwert2603.permesso.internal;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -52,14 +50,20 @@ public final class PermissionHelper {
                         return Single.create(new SingleOnSubscribe<String>() {
                             @Override
                             public void subscribe(SingleEmitter<String> emitter) {
-                                emitters.put(lastRequestCode, emitter);
+                                final int requestCode = lastRequestCode;
+                                lastRequestCode = getNextRequestCode(lastRequestCode);
+                                emitters.put(requestCode, emitter);
                                 final PermessoFragment permessoFragment = new PermessoFragment();
                                 activity.getSupportFragmentManager()
                                         .beginTransaction()
                                         .add(permessoFragment, "permessoFragment")
-                                        .commitNow();
-                                permessoFragment.requestPermissions(new String[]{permission}, lastRequestCode);
-                                lastRequestCode = getNextRequestCode(lastRequestCode);
+                                        .runOnCommit(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                permessoFragment.requestPermissions(new String[]{permission}, requestCode);
+                                            }
+                                        })
+                                        .commitAllowingStateLoss();
                             }
                         });
                     }
@@ -90,7 +94,7 @@ public final class PermissionHelper {
             PermissionHelper.INSTANCE.onPermissionResult(requestCode, permissions, grantResults);
             requireFragmentManager().beginTransaction()
                     .remove(this)
-                    .commitNow();
+                    .commitAllowingStateLoss();
         }
     }
 }

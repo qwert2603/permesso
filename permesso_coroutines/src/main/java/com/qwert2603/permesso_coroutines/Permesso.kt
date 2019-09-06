@@ -36,15 +36,18 @@ object PermessoCoroutines {
             return permission
         } else {
             val channel = Channel<String>()
-            chs[lastRequestCode] = channel
+
+            val requestCode = lastRequestCode
+            lastRequestCode = getNextRequestCode(lastRequestCode)
+
+            chs[requestCode] = channel
 
             val permessoFragment = PermessoFragment()
             activity.supportFragmentManager
                     .beginTransaction()
                     .add(permessoFragment, "permessoFragment")
-                    .commitNow()
-            permessoFragment.requestPermissions(arrayOf(permission), lastRequestCode)
-            lastRequestCode = getNextRequestCode(lastRequestCode)
+                    .runOnCommit { permessoFragment.requestPermissions(arrayOf(permission), requestCode) }
+                    .commitAllowingStateLoss()
 
             return channel.receive()
         }

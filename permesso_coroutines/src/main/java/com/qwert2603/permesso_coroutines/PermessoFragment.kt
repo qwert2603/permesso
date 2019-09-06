@@ -7,6 +7,6 @@ internal class PermessoFragment : Fragment() {
         PermessoCoroutines.onPermissionResult(requestCode, permissions, grantResults)
         requireFragmentManager().beginTransaction()
                 .remove(this)
-                .commitNow()
+                .commitAllowingStateLoss()
     }
 }
